@@ -1,73 +1,65 @@
-let w;
-
-const images = [];
-let outerRim;
 const MAX_IMAGE_COUNT = 3;
 let rotationAngle = 0;
-const randomIndex = getRandomInt(MAX_IMAGE_COUNT);
-let currentImage;
+const randomCoreIndex = getRandomInt(MAX_IMAGE_COUNT);
+const randomOuterRimIndex = getRandomInt(MAX_IMAGE_COUNT);
+console.log('randomCoreIndex: ', randomCoreIndex);
+console.log('randomOuterRimIndex: ', randomOuterRimIndex);
+let currentCore;
+let currentOuterRim;
+let canvas;
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+    return Math.floor(fxrand() * max);
 }
 
 function preload() {
-    for (let index = 0; index < MAX_IMAGE_COUNT; index++) {
-        const loadedImage = loadImage(`media/F${3}.png`);
-        images.push(loadedImage);
-    }
-    outerRim = loadImage(`media/nft_ring-I-00${3}.png`);
+    currentCore = loadImage(`media/F${randomCoreIndex + 1}.png`);
+    currentOuterRim = loadImage(`media/nft_ring-I-00${randomOuterRimIndex + 1}.png`);
 }
 
-let imageScreenWidthRatio;
-let imageScreenHeightRatio;
-let newImageWidth;
-let newImageHeight;
-let outerRimScreenWidthRatio;
-let outerRimScreenHeightRatio;
-let newOuterRimWidth;
-let newOuterRimHeight;
+function resizeImage() {
+    if (currentCore && currentOuterRim) {
+        const imageScreenWidthRatio = (currentCore.width / Math.max(window.innerWidth, 500));
+        const imageScreenHeightRatio = (currentCore.height / Math.max(window.innerHeight, 500));
+        const newImageWidth = currentCore.width / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
+        const newImageHeight = currentCore.height / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
+        const outerRimScreenWidthRatio = (currentOuterRim.width / window.innerWidth);
+        const outerRimScreenHeightRatio = (currentOuterRim.height / window.innerHeight);
+        const newOuterRimWidth = currentOuterRim.width / Math.min(outerRimScreenWidthRatio, outerRimScreenHeightRatio);
+        const newOuterRimHeight = currentOuterRim.height / Math.min(outerRimScreenWidthRatio, outerRimScreenHeightRatio);
+        currentCore.resize(newImageWidth, newImageHeight);
+        currentOuterRim.resize(newOuterRimWidth, newOuterRimHeight);
+        redraw();
+    }
+}
+
+function windowResized() {
+    resizeCanvas(window.innerWidth, window.innerHeight);
+    resizeImage();
+}
 
 function setup(){
-    console.log('window.screen.width: ', window.screen.width);
-    console.log('window.screen.height: ', window.screen.height);
-    // square dimensions
+    noSmooth();
     angleMode(DEGREES);
-    createCanvas(window.screen.width, window.screen.height);
-    console.log('outerRim.width: ', outerRim.width);
-    console.log('outerRim.height: ', outerRim.height);
-    currentImage = images[randomIndex];
-    console.log('currentImage.width: ', currentImage.width);
-    console.log('currentImage.height: ', currentImage.height);
-    const imageScreenWidthRatio = (currentImage.width / window.screen.width);
-    const imageScreenHeightRatio = (currentImage.height / window.screen.height);
-    const newImageWidth = currentImage.width / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
-    const newImageHeight = currentImage.height / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
-    const outerRimScreenWidthRatio = (outerRim.width / window.screen.width);
-    const outerRimScreenHeightRatio = (outerRim.height / window.screen.height);
-    const newOuterRimWidth = outerRim.width / Math.min(outerRimScreenWidthRatio, outerRimScreenHeightRatio);
-    const newOuterRimHeight = outerRim.height / Math.min(outerRimScreenWidthRatio, outerRimScreenHeightRatio);
-    currentImage.resize(newImageWidth, newImageHeight);
-    outerRim.resize(newOuterRimWidth, newOuterRimHeight);
+    canvas = createCanvas(window.innerWidth, window.innerHeight);
+    resizeImage();
 }
 
 let alternateRotation = false;
 
 function draw(){
-    // background(220);
-    // ellipse(w/2,w/2,w/2);
-    translate(window.screen.width / 4, window.screen.height / 2.5);
+    translate(window.innerWidth / 4, window.innerHeight / 2.5);
     imageMode(CENTER);
     rotate(rotationAngle);
-    image(currentImage, 0, 0,);
-    image(outerRim, 0, 0);
+    image(currentCore, 0, 0,);
+    image(currentOuterRim, 0, 0);
     if (!alternateRotation) {
-        rotationAngle += 0.25;
+        rotationAngle += 0.18;
         if (rotationAngle >= 25) {
             alternateRotation = true;
         }
     } else if (alternateRotation) {
-      rotationAngle += -0.25;
+      rotationAngle += -0.18;
     }
     if (rotationAngle <= -20) {
         alternateRotation = false;
