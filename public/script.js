@@ -18,7 +18,7 @@ const doubleHaloB = getRandomInt(255);
 let invertRotation = false;
 
 const coinTossHalo = getRandomInt(100);
-const hasHalo = coinTossHalo <= 30; // 30% of instances will have a halo
+const hasHalo = coinTossHalo <= 40; // 40% of instances will have a halo
 const hasDoubleHalo = coinTossHalo <= 5; // 5% of instances will have a double halo
 const gradientBgCoinToss = getRandomInt(100);
 const hasGradientBackground = gradientBgCoinToss <= 2; // 2% of instances with radiant background
@@ -27,10 +27,10 @@ const hasRareMandala = mandalaToinCoss <= 10;
 const hasPremiumMandala = mandalaToinCoss <= 30 && mandalaToinCoss > 10;
 
 window.$fxhashFeatures = {
-    Halo: hasHalo,
-    DoubleHalo: hasDoubleHalo,
-    GradientBackground: hasGradientBackground,
-    MandalaRarity: hasRareMandala ? 'Rare' : hasPremiumMandala ? 'Premium' : 'Common',
+    Halo: hasHalo ? `true(~40%)` : 'false',
+    DoubleHalo: hasDoubleHalo ? `true(~5%)` : 'false',
+    GradientBackground: hasGradientBackground ? 'true(~2%)' : 'false',
+    MandalaRarity: hasRareMandala ? 'Rare(~10%)' : hasPremiumMandala ? 'Premium(~20%)' : 'Common',
 }
 
 console.log('Thank you for supporting @artofschwarz NFTs.');
