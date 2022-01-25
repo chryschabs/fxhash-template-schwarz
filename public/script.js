@@ -1,4 +1,4 @@
-const MAX_ALLOWED_SIZE_PXLS = window.innerWidth;
+const MAX_ALLOWED_SIZE_PXLS = 50;
 let rotationAngle = 0;
 const mandalaToinCoss = getRandomInt(100);
 let loadedImage;
@@ -45,7 +45,7 @@ let originalImageHeight;
 
 function preload() {
     const index = hasRareMandala ? 1 : hasPremiumMandala ? 2 : 3;
-    loadedImage = loadImage(`media/F${index}.png`);
+    loadedImage = loadImage(`media/floralmandala.png`);
     originalImageWidth = loadedImage.width;
     originalImageHeight = loadedImage.height;
 }
@@ -56,7 +56,7 @@ function resizeImage() {
         const imageScreenHeightRatio = originalImageHeight <= MAX_ALLOWED_SIZE_PXLS ? 1:  (loadedImage.height / MAX_ALLOWED_SIZE_PXLS);
         const newImageWidth = loadedImage.width / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
         const newImageHeight = loadedImage.height / Math.min(imageScreenWidthRatio, imageScreenHeightRatio);
-        loadedImage.resize(newImageWidth, newImageHeight);
+        loadedImage.resize(newImageWidth / 4, newImageHeight / 4);
         redraw();
     }
 }
@@ -73,7 +73,7 @@ function mouseClicked() {
 let previewTriggered = false; // to trigger fxhash preview function once only.
 
 function setup(){
-    noSmooth();
+    // noSmooth();
     angleMode(DEGREES);
     canvas = createCanvas(window.innerWidth, window.innerHeight);
     resizeImage();
@@ -93,24 +93,31 @@ function setup(){
     }
 }
 
+let flip = false;
+
 function draw(){
     imageMode(CENTER);
     translate(window.innerWidth / 2, window.innerHeight / 2);
-    rotate(rotationAngle);
-    if (hasDoubleHalo) {
-        circle(0, 0, loadedImage.width / 1.2);
-        const circleColor = color(doubleHaloR, doubleHaloG, doubleHaloB);
-        fill(circleColor);
-    }
-    if (hasHalo) {
-        circle(0, 0, loadedImage.width / 1.5);
-        const circleColor = color(singleHaloR, singleHaloG, singleHaloB);
-        fill(circleColor);
-    }
+    scale(rotationAngle);
+    // if (hasDoubleHalo) {
+    //     circle(0, 0, loadedImage.width / 1.2);
+    //     const circleColor = color(doubleHaloR, doubleHaloG, doubleHaloB);
+    //     fill(circleColor);
+    // }
+    // if (hasHalo) {
+    //     circle(0, 0, loadedImage.width / 1.5);
+    //     const circleColor = color(singleHaloR, singleHaloG, singleHaloB);
+    //     fill(circleColor);
+    // }
     image(loadedImage, 0, 0);
     if(!previewTriggered) {
         fxpreview();
         previewTriggered = true; // do not remove
     }
-    rotationAngle += invertRotation ? -0.13 : 0.13;
+    rotationAngle += invertRotation ? -0.005 : 0.005;
+    if (rotationAngle >= 2) {
+        invertRotation = true;
+    } else if (rotationAngle <= -2) {
+        invertRotation = false;
+    }
 }

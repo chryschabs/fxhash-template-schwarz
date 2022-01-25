@@ -3,4 +3,5 @@ dist/
 dist-zipped/
 yarn.lock
 public/media/*
+public/series/*
 .idea
