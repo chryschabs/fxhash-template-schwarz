@@ -10,9 +10,6 @@ const randomB = getRandomInt(255);
 
 let shouldRotate = false;
 
-window.$fxhashFeatures = {
-}
-
 console.log('Thank you for supporting @artofschwarz NFTs.');
 console.log('Your lottery results: ', window.$fxhashFeatures);
 
@@ -22,7 +19,6 @@ function getRandomInt(max) {
 
 function preload() {
     const index = getRandomInt(3) + 1;
-    console.log('index: ', index);
     loadedImage = loadImage(`media/roundfloral${index}.png`);
 }
 
@@ -46,8 +42,6 @@ function windowResized() {
 function mouseClicked() {
     shouldRotate = !shouldRotate;
 }
-
-let previewTriggered = false; // to trigger fxhash preview function once only.
 
 function drawGradientBackground() {
     // code below adapted from: https://editor.p5js.org/Jaemi13/sketches/gAS-FB5Sx
@@ -76,10 +70,6 @@ function draw(){
     scale(0.5);
     rotate(rotateValue);
     image(loadedImage, 0, 0);
-    if(!previewTriggered) {
-        fxpreview();
-        previewTriggered = true; // do not remove
-    }
     if (shouldRotate) {
         rotateValue += flip ? -0.18 : 0.18;
     } else {

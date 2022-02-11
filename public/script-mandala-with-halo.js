@@ -33,7 +33,7 @@ window.$fxhashFeatures = {
     MandalaRarity: hasRareMandala ? 'Rare(~10%)' : hasPremiumMandala ? 'Premium(~20%)' : 'Common',
 }
 
-console.log('Thank you for supporting @artofschwarz NFTs.');
+console.log('Thank you for supporting generative NFTs.');
 console.log('Your lottery results: ', window.$fxhashFeatures);
 
 function getRandomInt(max) {
@@ -43,9 +43,11 @@ function getRandomInt(max) {
 let originalImageWidth;
 let originalImageHeight;
 
+
+// make sure to prefix files with asset-x (where x is a number > 1)
 function preload() {
     const index = hasRareMandala ? 1 : hasPremiumMandala ? 2 : 3;
-    loadedImage = loadImage(`media/floralmandala.png`);
+    loadedImage = loadImage(`media/asset-${index}.png`);
     originalImageWidth = loadedImage.width;
     originalImageHeight = loadedImage.height;
 }
@@ -99,16 +101,16 @@ function draw(){
     imageMode(CENTER);
     translate(window.innerWidth / 2, window.innerHeight / 2);
     scale(rotationAngle);
-    // if (hasDoubleHalo) {
-    //     circle(0, 0, loadedImage.width / 1.2);
-    //     const circleColor = color(doubleHaloR, doubleHaloG, doubleHaloB);
-    //     fill(circleColor);
-    // }
-    // if (hasHalo) {
-    //     circle(0, 0, loadedImage.width / 1.5);
-    //     const circleColor = color(singleHaloR, singleHaloG, singleHaloB);
-    //     fill(circleColor);
-    // }
+    if (hasDoubleHalo) {
+        circle(0, 0, loadedImage.width / 1.2);
+        const circleColor = color(doubleHaloR, doubleHaloG, doubleHaloB);
+        fill(circleColor);
+    }
+    if (hasHalo) {
+        circle(0, 0, loadedImage.width / 1.5);
+        const circleColor = color(singleHaloR, singleHaloG, singleHaloB);
+        fill(circleColor);
+    }
     image(loadedImage, 0, 0);
     if(!previewTriggered) {
         fxpreview();

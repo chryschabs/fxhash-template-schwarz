@@ -1,3 +1,13 @@
+Schwarz FXHASH Generative Token webpack boilerplate
+
+FXHash boilerplate with p5 JS included and sample code to get you started on your NFTs.
+
+Make sure to replace the script you want to use in `index.html`
+with one of the ones provided.
+Image assets are not included in this repo, it is up to you to include
+images in the media folder.
+A minified, production ready p5 JS library is bundled in the project.
+
 FXHASH Generative Token webpack boilerplate
 ================
 
