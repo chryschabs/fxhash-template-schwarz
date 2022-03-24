@@ -57,6 +57,7 @@ function drawWedges() {
     let angle = 0;
     let pointCount = 6;
     for(let i = angle, j = 0; i < radians(360 + angle) ; i += radians(360 / pointCount) ){
+        // code adapted from: https://www.alpharithms.com/evenly-spacing-objects-around-a-circle-in-p5js-processing-180222/
         let x = radius * Math.cos(i) + CANVAS_WIDTH * 0.5;
         let y = radius * Math.sin(i) + CANVAS_HEIGHT * 0.5;
         const loadedImage = images[j];
@@ -80,6 +81,7 @@ function drawWedges() {
             scaledWidth,
             scaledHeight
         );
+        // FIXME see if we can safely use 5 points instead
         if (j === images.length - 1) {
             j = 0;
         } else {
